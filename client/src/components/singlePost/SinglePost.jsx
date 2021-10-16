@@ -1,16 +1,28 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
+import axios from "axios";
 import { PostDetails } from "..";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useLocation } from "react-router";
 
 function SinglePost() {
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get("/" + path);
+      setPost(res.data);
+    };
+  }, [path]);
+
   return (
     <article className="singlePost">
-      <img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRzGFjnkMZINu3Zs_lbh-4k1BMHmq6pds6dw&usqp=CAU"
-        alt="post img"
-        className="singlePost__img"
-      />
+      {post.postImg && (
+        <img className="singlePost__img" src={post.postImg} alt="" />
+      )}
+
       <header className="singlePost__header">
         <h3 className="singlePost__title">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -25,24 +37,9 @@ function SinglePost() {
         </div>
       </header>
       <div className="singlePost__content">
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam,
-          blanditiis numquam cum provident corrupti impedit modi incidunt, sit
-          nobis ab esse facilis dolor voluptatum aspernatur et qui, facere
-          accusantium neque? Accusantium soluta amet aspernatur voluptates
-          possimus odio temporibus, ea optio. Reiciendis similique adipisci
-          possimus cum obcaecati nesciunt, nemo quidem ratione harum officiis
-          ullam dolor facilis eum quo dignissimos! Numquam, corporis. Earum
-          vitae, culpa sed nam, ducimus deserunt sint dignissimos cupiditate
-          laborum officiis delectus et voluptatibus voluptas maiores dolorum
-          excepturi voluptatem ea aut dicta fugiat repudiandae, ipsum veniam
-          perspiciatis. Suscipit, deleniti. Odio maiores veritatis ullam nobis
-          fugiat reprehenderit, culpa sed porro nesciunt illum fuga cupiditate
-          minima quam molestias debitis corrupti vitae impedit? Rem doloremque
-          magnam vel saepe, hic quia eveniet cumque.
-        </p>
+        <p>{post.descriptions}</p>
       </div>
-      <PostDetails />
+      <PostDetails post={post} />
     </article>
   );
 }

@@ -1,13 +1,12 @@
 import React from "react";
 import { PostItem } from "..";
 
-function Posts() {
+function Posts({ posts }) {
   return (
     <div className="posts">
-      <PostItem />
-      <PostItem />
-      <PostItem />
-      <PostItem />
+      {posts.map((p) => (
+        <PostItem post={p} />
+      ))}
     </div>
   );
 }
