@@ -1,0 +1,62 @@
+@import "../vars";
+
+.nav {
+  background: $main-color;
+  color: $light;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__left {
+    max-width: 150px;
+  }
+
+  &__center {
+    max-width: 700px;
+  }
+
+  &__right {
+    max-width: 300px;
+  }
+
+  &__logo {
+    color: $light;
+    text-decoration: none;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-family: $logo-font;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  &__menu {
+    display: flex;
+    justify-content: space-around;
+
+    &-item {
+      padding: 20px 15px;
+      font-size: 18px;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        background: $light;
+        color: $main-color;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+  }
+
+  &__user {
+    font-size: 40px;
+  }
+}
