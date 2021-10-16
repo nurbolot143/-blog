@@ -1,10 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-
-const app = express();
+const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
 
 dotenv.config();
+const app = express();
+app.use(express.json());
 
 mongoose
   .connect(process.env.DB_URL, {
@@ -13,7 +15,10 @@ mongoose
     useNewUrlParser: true,
   })
   .then(console.log("Connected DB"))
-  .catch((err) => console.log(err));
+  .catch((error) => console.log(error));
+
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
 
 app.listen("5001", () => {
   console.log("server is runing");
