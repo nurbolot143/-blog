@@ -5,7 +5,7 @@ const multer = require("multer");
 
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
-const categoryRoute = require("./routes/category");
+const categoryRoute = require("./routes/categories");
 const postRoute = require("./routes/posts");
 
 dotenv.config();

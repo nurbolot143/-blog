@@ -1,10 +1,24 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 
-function sideBar() {
+function SideBar() {
+  const [cats, setCats] = useState([]);
+
+  useEffect(() => {
+    const getCats = async () => {
+      const res = await axios.get("/categories");
+      setCats(res.data);
+    };
+
+    getCats();
+  }, []);
+
   return (
     <aside className="sideBar">
       <div className="sideBar__item">
@@ -22,31 +36,16 @@ function sideBar() {
       </div>
       <div className="sideBar__item">
         <h4 className="sideBar__item-title">Categories</h4>
+
         <ul className="sideBar__categories">
-          <li className="sideBar__categories-item">
-            <FolderOpenIcon className="sideBar__categories-item-icon" />
-            Technology
-          </li>
-          <li className="sideBar__categories-item">
-            <FolderOpenIcon className="sideBar__categories-item-icon" />
-            Coding
-          </li>
-          <li className="sideBar__categories-item">
-            <FolderOpenIcon className="sideBar__categories-item-icon" />
-            Livestyle
-          </li>
-          <li className="sideBar__categories-item">
-            <FolderOpenIcon className="sideBar__categories-item-icon" />
-            Music
-          </li>
-          <li className="sideBar__categories-item">
-            <FolderOpenIcon className="sideBar__categories-item-icon" />
-            Travel
-          </li>
-          <li className="sideBar__categories-item">
-            <FolderOpenIcon className="sideBar__categories-item-icon" />
-            Health
-          </li>
+          {cats.map((cat) => (
+            <Link to={`/?cat=${cat.name}`}>
+              <li className="sideBar__categories-item" key={cat.name}>
+                <FolderOpenIcon className="sideBar__categories-item-icon" />
+                {cat.name}
+              </li>
+            </Link>
+          ))}
         </ul>
       </div>
       <div className="sideBar__item">
@@ -77,4 +76,4 @@ function sideBar() {
   );
 }
 
-export default sideBar;
+export default SideBar;
